@@ -230,9 +230,6 @@ class PatternkitCommands extends DrushCommands {
     if (empty($library_name)) {
       throw new \InvalidArgumentException('Library name argument is empty or falsey.');
     }
-
-    $logger->notice('Returning from ' . __FUNCTION__);
-    return;
     $lb_enabled = FALSE;
     if (\Drupal::moduleHandler()->moduleExists('layout_builder')) {
       $lb_enabled = TRUE;
@@ -306,7 +303,6 @@ class PatternkitCommands extends DrushCommands {
           /** @var \Drupal\block\BlockInterface $component */
           foreach ($section->getComponents() as $component_delta => $component) {
             if (!$configuration = $this->updateBlockComponentPluginPattern($component)) {
-              $logger->notice($this->t('Skipping a component'));
               continue;
             }
             $section_storage
@@ -324,7 +320,6 @@ class PatternkitCommands extends DrushCommands {
     /** @var \Drupal\block\BlockInterface $block */
     foreach ($block_storage->loadMultiple() as $block) {
       if (!$block instanceof BlockInterface) {
-        $logger->notice($this->t('Skipping b/c not a BlockInterface ' . $block->id()));
         continue;
       }
       $plugin = $block->getPlugin();
@@ -384,7 +379,7 @@ class PatternkitCommands extends DrushCommands {
       }
       $configuration['patternkit_block_rid'] = $patternkit_block->getLoadedRevisionId();
     }
-    $logger->debug($this->t('Updating block plugin with id @plugin:',
+    $logger->notice($this->t('Updating block plugin with id @plugin:',
       ['@plugin' => $plugin_id]));
     try {
       $plugin = $component->getPlugin();
@@ -413,7 +408,7 @@ class PatternkitCommands extends DrushCommands {
     if ($base_pattern->getHash() === $pattern->getHash()) {
       return FALSE;
     }
-    $logger->debug(t('Updating pattern from @old to @new.',
+    $logger->notice(t('Updating pattern from @old to @new.',
       ['@old' => $pattern->getVersion(), '@new' => $base_pattern->getVersion()]));
     $pattern->setNewRevision();
     $pattern->isDefaultRevision(TRUE);
