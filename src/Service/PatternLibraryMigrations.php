@@ -111,7 +111,7 @@ class PatternLibraryMigrations {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function libUpdate() {
+  public function doLibraryUpdates() {
     $lb_enabled = $this->moduleHandler->moduleExists('layout_builder');
 
     $entity_count = 0;
