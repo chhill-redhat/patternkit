@@ -37,3 +37,14 @@ services:
     arguments: ['.', '@logger.channel.patternkit', '@patternkit.asset.library']
     tags:
       - { name: twig.loader, priority: 100 }
+  patternkit.library.migrations:
+    class: Drupal\patternkit\Service\PatternLibraryMigrations
+    arguments:
+      - '@logger.factory'
+      - '@module_handler'
+      - '@entity_type.manager'
+      - '@plugin.manager.block'
+      - '@plugin.manager.layout_builder.section_storage'
+      - '@layout_builder.tempstore_repository'
+      - '@keyvalue.expirable'
+      - '@patternkit.asset.library'

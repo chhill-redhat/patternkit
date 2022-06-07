@@ -1,5 +1,6 @@
 services:
   patternkit.commands:
     class: Drupal\patternkit\Commands\PatternkitCommands
+    arguments: ['@patternkit.library.migrations']
     tags:
       - { name: drush.command }
