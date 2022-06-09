@@ -214,9 +214,6 @@ class PatternkitCommands extends DrushCommands {
    * @command patternkit:libUpdate
    * @aliases pklu, patternkit-lib-update
    *
-   * @param string $library_name
-   *   The id of the pattern library to update from *.libraries.yml.
-   *
    * @return array|bool
    *   Drush expected command result.
    *
@@ -225,11 +222,9 @@ class PatternkitCommands extends DrushCommands {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function libUpdate($library_name) {
+  public function libUpdate() {
     $logger = $this->logger();
-    if (empty($library_name)) {
-      throw new \InvalidArgumentException('Library name argument is empty or falsey.');
-    }
+
     $lb_enabled = FALSE;
     if (\Drupal::moduleHandler()->moduleExists('layout_builder')) {
       $lb_enabled = TRUE;
@@ -331,8 +326,7 @@ class PatternkitCommands extends DrushCommands {
       ['@entities' => $entity_count, '@blocks' => $block_count]));
     $block_manager->clearCachedDefinitions();
     $entity_type_manager->clearCachedDefinitions();
-    $logger->notice($this->t('Completed running Patternkit library updates for @library.',
-      ['@library' => $library_name]));
+    $logger->notice($this->t('Completed running Patternkit library updates.'));
     return true;
   }
 
